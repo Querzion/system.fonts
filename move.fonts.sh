@@ -7,3 +7,7 @@ TO="~/.local/share/fonts"
 
 # Moving the fonts
 sudo mv $FROM/* $TO
+
+# Get some more fonts
+git clone https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/* $TO
+
