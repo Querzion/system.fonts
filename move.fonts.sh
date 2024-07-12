@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Full path to the git clone folder.
-FROM="$HOME/system.fonts/fonts"  # Change to the full path
+# Change to the full path
+FOLDER="$HOME/system.fonts"
+# path to fonts
+FROM="$FOLDER/fonts"  
 # Most common fonts folder to use.
 TO="$HOME/.local/share/fonts"
 
@@ -29,4 +31,11 @@ rm -rf /tmp/nerd-fonts
 # Refresh the font cache
 fc-cache -fv
 
-
+# Check if the directory exists
+if [ -d "$FOLDER" ]; then
+    # Remove the directory and its contents
+    rm -r "$FOLDER"
+    echo "Directory $FOLDER and its contents have been removed."
+else
+    echo "Directory $FOLDER does not exist."
+fi
