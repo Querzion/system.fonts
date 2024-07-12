@@ -1,13 +1,32 @@
-#! /bin/bash
+#!/bin/bash
 
-# git clone folder.
-FROM="~/system.fonts/fonts"  # Change this depending on where you did the git clone
+# Full path to the git clone folder.
+FROM="$HOME/system.fonts/fonts"  # Change to the full path
 # Most common fonts folder to use.
-TO="~/.local/share/fonts"
+TO="$HOME/.local/share/fonts"
+
+# Check if the FROM directory exists
+if [ ! -d "$FROM" ]; then
+    echo "Source directory $FROM does not exist."
+    exit 1
+fi
+
+# Ensure the target directory exists
+mkdir -p "$TO"
 
 # Moving the fonts
-sudo mv $FROM/* $TO
+mv "$FROM"/* "$TO"
 
-# Get some more fonts
-git clone https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/* $TO
+# Clone the entire repository
+git clone https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts
+
+# Copy the necessary fonts from the cloned repository
+cp -r /tmp/nerd-fonts/patched-fonts/* "$TO"
+
+# Clean up
+rm -rf /tmp/nerd-fonts
+
+# Refresh the font cache
+fc-cache -fv
+
 
