@@ -13,23 +13,34 @@ if [ ! -d "$FROM" ]; then
     exit 1
 fi
 
-# Ensure the target directory exists
-mkdir -p "$TO"
+moveFonts() {
+    # Ensure the target directory exists
+    mkdir -p "$TO"
 
-# Moving the fonts
-mv "$FROM"/* "$TO"
+    # Moving the fonts
+    mv "$FROM"/* "$TO"
+}
 
-# Clone the entire repository
-git clone https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts
+indexFonts() {
 
-# Copy the necessary fonts from the cloned repository
-cp -r /tmp/nerd-fonts/patched-fonts/* "$TO"
+}
 
-# Clean up
-rm -rf /tmp/nerd-fonts
+getNerdFonts() {
+    # Clone the entire repository
+    git clone https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts
 
-# Refresh the font cache
-fc-cache -fv
+    # Copy the necessary fonts from the cloned repository
+    cp -r /tmp/nerd-fonts/patched-fonts/* "$TO"
+
+    # Clean up
+    rm -rf /tmp/nerd-fonts
+
+    # Refresh the font cache
+    fc-cache -fv
+}
+
+moveFonts
+#getNerdFonts
 
 # Check if the directory exists
 if [ -d "$FOLDER" ]; then
